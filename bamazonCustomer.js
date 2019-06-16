@@ -13,13 +13,13 @@ const connection = mysql.createConnection({
 connection.connect(err => {
     if (err) throw err;
     console.log("Database live: " + connection.threadId);
-    runBamazon();
+    runBamazonCustomer();
     // runPurchasePrompt();
 });
 
 let cart = [];
 
-function runBamazon() {
+function runBamazonCustomer() {
     console.log(`
     -------------------------------------
     Welcome to Bamazon
@@ -55,7 +55,7 @@ function runCustomerSelection() {
                 // connection.end();
                 break;
             case "View Product":
-                runBamazon();
+                runBamazonCustomer();
                 break;
             case "View Cart":
                 viewCart();
