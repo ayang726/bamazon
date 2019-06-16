@@ -109,6 +109,12 @@ function addInventory() {
 
 function addNewProduct() {
     console.log("Adding a new product");
+    let departmentNames = [];
+    connection.query("SELECT department_name FROM departments", (err, res) => {
+        if (err) throw err;
+        res.forEach(row => departmentNames.push(row.department_name));
+    });
+
     inquirer.prompt([
         {
             message: "Enter the product's name",
@@ -118,7 +124,8 @@ function addNewProduct() {
         {
             message: "Enter the product's department",
             name: "department",
-            type: "input"
+            type: "list",
+            choices: departmentNames
         },
         {
             message: "Enter the product's price",

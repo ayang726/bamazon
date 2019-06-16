@@ -9,6 +9,7 @@ CREATE TABLE products(
     department_name VARCHAR(100) NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     stock_quantity INT(5) NOT NULL,
+    product_sales INT DEFAULT 0,
     PRIMARY KEY (id)
 );
 
@@ -25,3 +26,17 @@ VALUES
 ("jacket", "styles", 100, 1),
 ("fan", "furnitures", 30, 0),
 ("computer", "electronics", 1500, 10);
+
+CREATE TABLE departments(
+    id INT AUTO_INCREMENT NOT NULL,
+    department_name VARCHAR(100) NOT NULL,
+    overhead_cost INT NOT NULL,
+    PRIMARY KEY (id)
+);
+
+INSERT INTO departments (department_name, overhead_cost)
+VALUES 
+("electronics", 30000),
+("styles", 10000),
+("furnitures", 50000),
+("entertainment", 15000);

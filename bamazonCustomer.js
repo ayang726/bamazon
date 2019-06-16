@@ -7,7 +7,8 @@ const connection = mysql.createConnection({
     port: 8889,
     database: "bamazon",
     user: "root",
-    password: "root"
+    password: "root",
+    multipleStatements: true
 });
 
 connection.connect(err => {
@@ -104,6 +105,7 @@ function runPurchasePrompt() {
                 const productName = res[0].product_name;
                 const storeQuantity = res[0].stock_quantity;
                 const price = res[0].price;
+                const department = res[0].department;
                 if (quantity <= storeQuantity) {
                     inquirer.prompt([{
                         message: `You wish to buy ${quantity} ${productName}`,
@@ -116,6 +118,7 @@ function runPurchasePrompt() {
                                 id,
                                 productName,
                                 quantity,
+                                department,
                                 subtotal: price * quantity
                             });
                             runCustomerSelection();
@@ -165,10 +168,13 @@ function checkOut() {
     let total = 0;
     cart.forEach((item, index) => {
 
-        connection.query(`UPDATE products 
-        SET stock_quantity = stock_quantity -  ?
-        WHERE ?`,
-            [item.quantity, { id: item.id }],
+        connection.query(`
+        UPDATE products 
+        SET stock_quantity = stock_quantity -  ?,
+            product_sales = product_sales + ?
+        WHERE ?;
+        `,
+            [item.quantity, item.subtotal, { id: item.id }],
             (err) => {
                 if (err) {
                     successful = false;
