@@ -25,6 +25,6 @@ To run the app, following the following instructions
 3. Start a SQL server
 4. Run the bamazon.sql in workbench to setup the database
 5. Try out different access to the app:
-    bamazonCustomer.js
-    bamazonManager.js
-    bamazonSupervisor.js
+    * bamazonCustomer.js
+    * bamazonManager.js
+    * bamazonSupervisor.js
